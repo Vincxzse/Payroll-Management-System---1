@@ -52,7 +52,7 @@ export default function Sidebar() {
                             <div className="bg-gray-300 h-10 w-10 rounded-full"></div>
                             <div className="flex flex-col items-start justify-start h-10">
                                 <h2 className="text-sans font-medium text-sm">Username</h2>
-                                <p className="text-sm text-[rgba(0,0,0,0.5)] text-sans font-light">User Role</p>
+                                <p className="text-sm text-[rgba(0,0,0,0.5)] text-sans">User Role</p>
                             </div>
                         </div>
                         <button className="flex flex-col items-center justify-center h-10 w-10 cursor-pointer rounded-lg hover:bg-gray-100 transition duration-200">
