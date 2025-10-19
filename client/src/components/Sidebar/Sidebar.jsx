@@ -30,12 +30,12 @@ export default function Sidebar() {
                 <div className="flex flex-col items-center justify-center h-1/2 w-full px-5">
                     <div className="h-full w-full items-center justify-center flex flex-col border-b border-[rgba(0,0,0,0.2)] py-5">
                         <div className="flex flex-col items-center justify-start gap-2 w-full h-full">
-                            <NavLink image={dashboardIcon} title="Dashboard" />
-                            <NavLink image={employeesIcon} title="Employees" />
-                            <NavLink image={payrollIcon} title="Payroll" />
-                            <NavLink image={performanceIcon} title="Performance" />
-                            <NavLink image={forecastingIcon} title="Forecasting" />
-                            <NavLink image={reportsIcon} title="Reports" />
+                            <NavLink image={dashboardIcon} title="Dashboard" link="/admin/dashboard" />
+                            <NavLink image={employeesIcon} title="Employees" link="/admin/employees" />
+                            <NavLink image={payrollIcon} title="Payroll" link="/admin/payroll" />
+                            <NavLink image={performanceIcon} title="Performance" link="/admin/performance" />
+                            <NavLink image={forecastingIcon} title="Forecasting" link="/admin/forecasting" />
+                            <NavLink image={reportsIcon} title="Reports" link="/admin/reports" />
                             {/* <NavLink image={employeePortalIcon} title="Employee Portal" /> */}
                         </div>
                     </div>
