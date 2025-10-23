@@ -7,17 +7,13 @@ export default function LoginPage() {
     return(
         <>
             <div className="h-full w-full flex flex-col items-center justify-center">
-                <div className="flex flex-col items-center justify-start w-1/3 h-4/5 bg-white shadow-[0_0_10px_rgba(0,0,0,0.2)] rounded-lg py-5 px-10 gap-4">
+                <div className="flex flex-col items-center justify-between w-1/3 h-7/10 bg-white shadow-[0_0_10px_rgba(0,0,0,0.2)] rounded-lg py-5 px-10 gap-4">
                     <div className="flex flex-col items-center justify-center w-full h-auto">
                         <div className="bg-gray-300 h-12 w-12 rounded-lg"></div>
                         <h1 className="font-medium text-lg">Welcome to Company</h1>
                         <p className="text-[rgba(0,0,0,0.5)]">Sign in to access your workspace</p>
                     </div>
-                    <form className="flex flex-col items-start justify-center w-full gap-2">
-                        <div className="flex flex-col items-start justify-center">
-                            <h2 className="font-medium text-lg">Sign In</h2>
-                            <p className="text-[rgba(0,0,0,0.5)]">Enter your credentials to continue</p>
-                        </div>
+                    <form className="flex flex-col items-center justify-center w-full gap-2">
                         <div className="flex flex-col items-start justify-center w-full">
                             <p className="font-medium">Email</p>
                             <div className="flex flex-row items-center justify-start border border-[rgba(0,0,0,0.5)] w-full px-2 py-1 gap-2 rounded-lg">
