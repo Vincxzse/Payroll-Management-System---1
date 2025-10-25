@@ -18,7 +18,7 @@ export default function LoginPage() {
         if (!email || !password) return setErrorMessage("Please fill in all fields")
         try {
             const body = { email, password }
-            const response = await fetch(`${API_URL}/login`, {
+            const response = await fetch(`${API_URL}/api/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -29,6 +29,7 @@ export default function LoginPage() {
             if (!response.ok) {
                 setErrorMessage(data.message)
             } else {
+                localStorage.setItem("user", JSON.stringify(data.user))
                 navigate("/admin")
                 setErrorMessage(data.message)
             }

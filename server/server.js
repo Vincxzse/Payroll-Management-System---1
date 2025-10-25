@@ -3,6 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 
 import authRoutes from './routes/auth.js'
+import dashboardAnalytics from './routes/dashboard-analytics.js'
 
 dotenv.config()
 
@@ -14,7 +15,8 @@ app.use(cors())
 app.use(express.json())
 
 // Routes
-app.use(authRoutes)
+app.use('/api', authRoutes)
+app.use('/api', dashboardAnalytics)
 
 app.get("/", (req, res) => {
     console.log("Server is running")

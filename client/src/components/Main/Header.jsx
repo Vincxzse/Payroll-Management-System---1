@@ -18,9 +18,9 @@ export default function Header(props) {
                     <button className="flex flex-row h-10 w-auto items-center justify-start gap-1 cursor-pointer hover:bg-gray-100 transition duration-200 px-2 rounded-lg">
                         <img src={notificationIcon} alt="bell icon" className="h-5 w-auto" />
                     </button>
-                    <button className="flex flex-row h-10 w-auto items-center justify-start gap-1 cursor-pointer hover:bg-gray-100 transition duration-200 px-2 rounded-lg">
+                    <button className="flex flex-row h-10 w-auto items-center justify-start gap-3 cursor-pointer hover:bg-gray-100 transition duration-200 px-2 rounded-lg">
                         <div className="bg-gray-300 h-6 w-6 rounded-full"></div>
-                        <h2 className="text-sans font-normal text-sm">Username</h2>
+                        <h2 className="text-sans font-normal text-sm">{props.currentUser.first_name} {props.currentUser.last_name}</h2>
                         <img src={dropdownIcon} alt="drop down icon" className="h-4 w-auto" />
                     </button>
                 </div>
