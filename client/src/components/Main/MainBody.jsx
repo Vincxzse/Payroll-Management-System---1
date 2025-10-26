@@ -10,7 +10,7 @@ export default function MainBody() {
 
     return(
         <>
-            <div className='grid grid-cols-6 w-screen h-screen bg-white'>
+            <div className='grid grid-cols-6 w-screen h-screen bg-white overflow-hidden'>
                 <Sidebar />
                 <Routes>
                     <Route index element={<Navigate to="dashboard" replace />} />

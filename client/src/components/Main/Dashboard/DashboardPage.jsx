@@ -11,10 +11,25 @@ export default function DashboardPage(props) {
     const [totalEmployees, setTotalEmployees] = useState(0)
     const [addedThisMonth, setAddedThisMonth] = useState(0)
     const [percentageChange, setPercentageChange] = useState(0)
+
+    const [monthlyPayroll, setMonthlyPayroll] = useState(0)
+    const [payrollChange, setPayrollChange] = useState(0)
+    const [payrollPercentage, setPayrollPercentage] = useState(0)
+
+    const [avgKPIScore, setAvgKPIScore] = useState(0)
+    const [kpiChange, setKpiChange] = useState(0)
+    const [kpiPercentage, setKpiPercentage] = useState(0)
+
+    const [growthForecast, setGrowthForecast] = useState(0)
+    const [forecastConfidence, setForecastConfidence] = useState(0)
+    const [forecastPeriod, setForecastPeriod] = useState("Q1 2025")
+    
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         fetchTotalEmployees()
+        fetchMonthlyPayroll()
+        fetchAvgKPIScores()
     }, [])
 
     const fetchTotalEmployees = async () => {
@@ -35,11 +50,55 @@ export default function DashboardPage(props) {
         }
     }
 
+    const fetchMonthlyPayroll = async () => {
+        try {
+            const response = await fetch(`${API_URL}/api/get-monthly-payroll`)
+            const result = await response.json()
+            const current = result.currentMonth
+            const last = result.lastMonth
+            const change = current - last
+            const percentage = last > 0 ? ((change / last) * 100).toFixed(1) : 0
+            setMonthlyPayroll(current)
+            setPayrollChange(change)
+            setPayrollPercentage(percentage)
+        } catch (err) {
+            console.error("Error fetching payroll: ", err)
+        }
+    }
+
+    const fetchAvgKPIScores = async () => {
+        try {
+            const response = await fetch(`${API_URL}/api/get-avg-kpi-score`)
+            const result = await response.json()
+            const current = result.currentMonth
+            const last = result.lastMonth
+            const change = current - last
+            const percentage = last > 0 ? ((change / last) * 100).toFixed(1) : 0
+            setAvgKPIScore(current)
+            setKpiChange(change)
+            setKpiPercentage(percentage)
+        } catch (err) {
+            console.error("Error fetching KPI Scores: ", err)
+        }
+    }
+
+    const fetchGrowthForecast = async () => {
+        try {
+            const response = await fetch(`${API_URL}/api/get-growth-forecast`)
+            const result = await response.json()
+            setGrowthForecast(result.predictedValue)
+            setForecastConfidence(result.confidence)
+            setForecastPeriod(result.period)
+        } catch (err) {
+            console.error("Error fetching growth forecast: ", err)
+        }
+    }
+
     return(
         <>
-            <div className="col-span-5 flex flex-col w-full h-full">
+            <div className="col-span-5 flex flex-col w-full min-h-full">
                 <Header pageTitle="Dashboard" pageDescription="Overview and key metrics" currentUser={props.currentUser} />
-                <div className="flex flex-col items-center justify-start h-9/10 w-full p-5 gap-5">
+                <div className="flex flex-col items-center justify-start h-9/10 w-full p-5 gap-5 overflow-y-scroll">
                     <div className="flex flex-col items-start justify-start w-full h-auto">
                         <h2 className="text-md font-medium">Good morning, {props.currentUser.first_name}</h2>
                         <p className="font-sans text-sm text-[rgba(0,0,0,0.6)]">Here's what's happening at your company today</p>
@@ -47,11 +106,31 @@ export default function DashboardPage(props) {
                     <CardOne
                         cardTitle="Total Employees"
                         cardValue={loading ? "..." : totalEmployees}
-                        cardDescription={loading ? "..." : `+${percentageChange}% from last month`}
                         cardImage={upIcon}
                         changes={loading ? "..." : `+${addedThisMonth}`}
+                        cardDescription={loading ? "..." : `+${percentageChange}% from last month`}
                     />
-                    <CardOne cardTitle="Monthly Payroll" cardValue="$324K" cardDescription="+4% from last month" cardImage={upIcon} changes="+2.1%" />
+                    <CardOne
+                        cardTitle="Monthly Payroll"
+                        cardValue={loading ? "..." : `₱${monthlyPayroll}`}
+                        cardImage={payrollPercentage >= 0 ? upIcon : downIcon}
+                        changes={loading ? "..." : `${payrollPercentage >= 0 ? '+' : '-'}${payrollPercentage}%`}
+                        cardDescription="On schedule for UNDEFINED"
+                    />
+                    <CardOne
+                        cardTitle="Avg KPI Score"
+                        cardValue={loading ? "..." : `${avgKPIScore.toFixed(1)}%`}
+                        cardImage={kpiPercentage >= 0 ? upIcon : downIcon}
+                        changes={loading ? "..." : `${kpiPercentage >= 0 ? '+' : ''}${kpiPercentage}%`}
+                        cardDescription={loading ? "..." : avgKPIScore >= 85 ? "Above target of 85%" : "Below target of 85%"}
+                    />
+                    <CardOne
+                        cardTitle="Growth Forecast"
+                        cardValue={loading ? "..." : `${growthForecast}%`}
+                        cardImage=""
+                        changes={forecastPeriod}
+                        cardDescription={loading ? "..." : `ML prediction confidence: ${forecastConfidence}%`}
+                    />
                 </div>
             </div>
         </>
