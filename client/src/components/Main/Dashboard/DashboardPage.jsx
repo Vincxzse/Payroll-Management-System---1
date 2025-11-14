@@ -7,7 +7,7 @@ import { API_URL } from "../../../config"
 const upIcon = "/images/up.png"
 const downIcon = "/images/down.png"
 
-export default function DashboardPage(props) {
+export default function DashboardPage({ pageLayout, currentUser }) {
     const [totalEmployees, setTotalEmployees] = useState(0)
     const [addedThisMonth, setAddedThisMonth] = useState(0)
     const [percentageChange, setPercentageChange] = useState(0)
@@ -96,11 +96,11 @@ export default function DashboardPage(props) {
 
     return(
         <>
-            <div className="col-span-5 flex flex-col w-full min-h-full">
-                <Header pageTitle="Dashboard" pageDescription="Overview and key metrics" currentUser={props.currentUser} />
-                <div className="flex flex-col items-center justify-start h-9/10 w-full p-5 gap-5 overflow-y-scroll">
+            <div className={`${pageLayout ? 'col-span-5' : 'col-span-17 xl:col-start-2'} col-start-2 flex flex-col w-full min-h-full`}>
+                <Header pageLayout={pageLayout} pageTitle="Dashboard" pageDescription="Overview and key metrics" currentUser={currentUser} />
+                <div className="flex flex-col items-center justify-start h-9/10 w-full py-5 pl-1 xl:p-5 gap-5 overflow-y-scroll">
                     <div className="flex flex-col items-start justify-start w-full h-auto">
-                        <h2 className="text-md font-medium">Good morning, {props.currentUser.first_name}</h2>
+                        <h2 className="text-md font-medium">Good morning, {currentUser.first_name}</h2>
                         <p className="font-sans text-sm text-[rgba(0,0,0,0.6)]">Here's what's happening at your company today</p>
                     </div>
                     <CardOne

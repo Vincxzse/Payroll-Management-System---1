@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 
 import authRoutes from './routes/auth.js'
 import dashboardAnalytics from './routes/dashboard-analytics.js'
+import employeesRoute from './routes/employees-route.js'
 
 dotenv.config()
 
@@ -17,6 +18,7 @@ app.use(express.json())
 // Routes
 app.use('/api', authRoutes)
 app.use('/api', dashboardAnalytics)
+app.use('/api', employeesRoute)
 
 app.get("/", (req, res) => {
     console.log("Server is running")

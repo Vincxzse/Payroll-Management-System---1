@@ -1,18 +1,20 @@
 import { Link, useLocation } from "react-router-dom"
 
-export default function NavLink(props) {
+export default function NavLink({ sidebarStatus, image, title, link }) {
     const location = useLocation()
-    const isActive = location.pathname === props.link
+    const isActive = location.pathname === link
 
     return(
         <>
-            <Link to={props.link || "#"} className={`w-full h-10 flex flex-row items-center gap-4 px-3 rounded-lg transition duration-200 cursor-pointer ${
+            <Link to={link || "#"} className={`w-full h-10 flex flex-row items-center rounded-lg transition duration-200 cursor-pointer ${
+                sidebarStatus ? 'gap-4 px-3' : 'justify-center'
+            } ${
                 isActive
                     ? 'bg-black'
                     : 'bg-transparent text-black hover:bg-gray-100'
             }`}>
-                <img src={props.image} className={`h-5 w-5 ${ isActive ? 'invert-100' : null }`} />
-                <p className={`font-medium ${ isActive ? 'text-white' : 'text-black' }`}>{ props.title }</p>
+                <img src={image} className={`h-5 w-5 ${ isActive ? 'invert' : '' }`} />
+                <p className={`${sidebarStatus ? 'block' : 'hidden'} font-medium ${ isActive ? 'text-white' : 'text-black' }`}>{ title }</p>
             </Link>
         </>
     )

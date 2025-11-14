@@ -1,3 +1,6 @@
+
+import { useState } from "react"
+
 import NavLink from "./Nav-Link"
 
 const menuIcon = "/images/menu.png"
@@ -12,52 +15,66 @@ const settingsIcon = "/images/settings.png"
 const helpIcon = "/images/help.png"
 const signoutIcon = "/images/signout.png"
 
-export default function Sidebar() {
+export default function Sidebar({ onAction }) {
     const user = JSON.parse(localStorage.getItem("user"))
+    const [sidebarStatus, setSidebarStatus] = useState(true)
+
+    const handleMenuClick = () => {
+        onAction(false)
+        setSidebarStatus(false)
+    }
+
+    const handleMenuClick2 = () => {
+        onAction(true)
+        setSidebarStatus(true)
+    }
     
     return(
         <>
-            <div className="flex flex-col items-center justify-start bg-gray-50 w-full h-full col-span-1 border-r border-[rgba(0,0,0,0.2)]">
+            <div className={`fixed xl:static z-50 flex flex-col items-center justify-start bg-gray-50 ${sidebarStatus ? 'w-64' : 'w-20'} xl:w-full h-full border-r border-[rgba(0,0,0,0.2)] transition-all duration-300`}>
                 <div className="h-1/10 w-full border-b border-[rgba(0,0,0,0.2)] px-5">
                     <div className="flex flex-row w-full h-full items-center justify-between">
-                        <div className="flex flex-row h-full w-auto items-center justify-start gap-2">
+                        <div className={`${sidebarStatus ? 'flex' : 'hidden'} flex-row h-full w-auto items-center justify-start gap-2`}>
                             <div className="bg-gray-300 h-10 w-10 rounded-lg"></div>
                             <h2 className="text-sans font-medium text-lg">Company</h2>
                         </div>
-                        <button className="flex flex-col items-center justify-center h-10 w-10 cursor-pointer rounded-lg hover:bg-gray-100 transition duration-200">
+                        <button
+                            onClick={sidebarStatus ? handleMenuClick : handleMenuClick2}
+                            className="flex flex-col items-center justify-center h-10 w-10 cursor-pointer rounded-lg hover:bg-gray-100 transition duration-200"
+                        >
                             <img src={menuIcon} className="h-5 w-auto" />
                         </button>
                     </div>
                 </div>
-                <div className="flex flex-col items-center justify-center h-1/2 w-full px-5">
+                <div className="flex flex-col items-center justify-center h-1/2 w-full px-2 xl:px-5">
                     <div className="h-full w-full items-center justify-center flex flex-col border-b border-[rgba(0,0,0,0.2)] py-5">
                         <div className="flex flex-col items-center justify-start gap-2 w-full h-full">
-                            <NavLink image={dashboardIcon} title="Dashboard" link="/admin/dashboard" />
-                            <NavLink image={employeesIcon} title="Employees" link="/admin/employees" />
-                            <NavLink image={payrollIcon} title="Payroll" link="/admin/payroll" />
-                            <NavLink image={performanceIcon} title="Performance" link="/admin/performance" />
-                            <NavLink image={forecastingIcon} title="Forecasting" link="/admin/forecasting" />
-                            <NavLink image={reportsIcon} title="Reports" link="/admin/reports" />
+                            <NavLink sidebarStatus={sidebarStatus} image={dashboardIcon} title="Dashboard" link="/admin/dashboard" />
+                            <NavLink sidebarStatus={sidebarStatus} image={employeesIcon} title="Employees" link="/admin/employees" />
+                            <NavLink sidebarStatus={sidebarStatus} image={payrollIcon} title="Payroll" link="/admin/payroll" />
+                            <NavLink sidebarStatus={sidebarStatus} image={performanceIcon} title="Performance" link="/admin/performance" />
+                            <NavLink sidebarStatus={sidebarStatus} image={forecastingIcon} title="Forecasting" link="/admin/forecasting" />
+                            <NavLink sidebarStatus={sidebarStatus} image={reportsIcon} title="Reports" link="/admin/reports" />
                             {/* <NavLink image={employeePortalIcon} title="Employee Portal" /> */}
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col items-center justify-center h-3/10 w-full p-5 border-b border-[rgba(0,0,0,0.2)]">
+                <div className="flex flex-col items-center justify-center h-3/10 w-full p-2 xl:p-5 border-b border-[rgba(0,0,0,0.2)]">
                     <div className="flex flex-col items-center justify-start w-full h-full gap-2">
-                        <NavLink image={settingsIcon} title="Settings" />
-                        <NavLink image={helpIcon} title="Help" />
+                        <NavLink sidebarStatus={sidebarStatus} image={settingsIcon} title="Settings" link="" />
+                        <NavLink sidebarStatus={sidebarStatus} image={helpIcon} title="Help" link="" />
                     </div>
                 </div>
                 <div className="h-1/10 w-full border-b border-[rgba(0,0,0,0.2)] px-5">
                     <div className="flex flex-row w-full h-full items-center justify-between">
                         <div className="flex flex-row h-full w-auto items-center justify-start gap-2">
                             <div className="bg-gray-300 h-10 w-10 rounded-full"></div>
-                            <div className="flex flex-col items-start justify-start h-10">
+                            <div className={`${sidebarStatus ? 'flex' : 'hidden'} flex-col items-start justify-start h-10`}>
                                 <h2 className="text-sans font-medium text-sm">{user.first_name} {user.last_name}</h2>
                                 <p className="text-sm text-[rgba(0,0,0,0.5)] text-sans">{user.role}</p>
                             </div>
                         </div>
-                        <button className="flex flex-col items-center justify-center h-10 w-10 cursor-pointer rounded-lg hover:bg-gray-100 transition duration-200">
+                        <button className={`${sidebarStatus ? 'flex' : 'hidden'} flex-col items-center justify-center h-10 w-10 cursor-pointer rounded-lg hover:bg-gray-100 transition duration-200`}>
                             <img src={signoutIcon} className="h-5 w-auto" />
                         </button>
                     </div>
