@@ -30,4 +30,13 @@ router.post("/login", async (req, res) => {
     }
 })
 
+router.post("/create-account", async (req, res) => {
+    try {
+        const { firstName, lastName, email, employeeId, password, role, phone, position } = req.body
+        console.log("First Name:", firstName)
+    } catch (err) {
+        
+    }
+})
+
 export default router

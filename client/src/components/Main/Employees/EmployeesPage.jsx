@@ -11,6 +11,7 @@ const employeeIcon = "/images/employee.png"
 
 export default function EmployeesPage({ pageLayout, currentUser }) {
     const [addEmployeeModal, setAddEmployeeModal] = useState(false)
+
     const [employees, setEmployees] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
@@ -55,9 +56,12 @@ export default function EmployeesPage({ pageLayout, currentUser }) {
 
     return(
         <>
-            {addEmployeeModal ? <AddEmployee /> : null}
+            {/* <div className='absolute bg-white min-w-100 h-15 z-102 left-1/2 -translate-x-1/2 top-10 shadow-[0_0_15px_5px_rgba(0,0,0,0.1)] border-l-10 border-l-green-500'>
+                
+            </div> */}
+            {addEmployeeModal ? <AddEmployee setAddEmployeeModal={() => setAddEmployeeModal()} /> : null}
             <div className={`${pageLayout ? 'col-span-5' : 'col-span-17 xl:col-start-2'} col-start-2 flex flex-col w-full min-h-full`}>
-                <Header pageTitle="Employees" pageDescription="Manage team members and profiles" currentUser={currentUser} />
+                <Header pageLayout={pageLayout} pageTitle="Employees" pageDescription="Manage team members and profiles" currentUser={currentUser} />
                 <div className="flex flex-col items-center justify-start h-9/10 w-full p-5 gap-5 overflow-y-scroll">
                     <div className="flex flex-row items-center justify-between w-full h-auto">
                         <div className="flex flex-col items-start justify-start w-full h-auto">

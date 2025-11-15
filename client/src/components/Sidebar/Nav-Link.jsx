@@ -7,14 +7,14 @@ export default function NavLink({ sidebarStatus, image, title, link }) {
     return(
         <>
             <Link to={link || "#"} className={`w-full h-10 flex flex-row items-center rounded-lg transition duration-200 cursor-pointer ${
-                sidebarStatus ? 'gap-4 px-3' : 'justify-center'
+                sidebarStatus ? 'xl:gap-4 xl:px-3 justify-center xl:justify-start' : 'justify-start xl:justify-center px-3 gap-4'
             } ${
                 isActive
                     ? 'bg-black'
                     : 'bg-transparent text-black hover:bg-gray-100'
             }`}>
                 <img src={image} className={`h-5 w-5 ${ isActive ? 'invert' : '' }`} />
-                <p className={`${sidebarStatus ? 'block' : 'hidden'} font-medium ${ isActive ? 'text-white' : 'text-black' }`}>{ title }</p>
+                <p className={`${sidebarStatus ? 'hidden xl:block' : 'block xl:hidden'} font-medium ${ isActive ? 'text-white' : 'text-black' }`}>{ title }</p>
             </Link>
         </>
     )

@@ -3,6 +3,8 @@ import { useState } from "react"
 
 import NavLink from "./Nav-Link"
 
+const companyLogo = "/images/logo.jpg"
+
 const menuIcon = "/images/menu.png"
 const dashboardIcon = "/images/dashboard.png"
 const employeesIcon = "/images/employees.png"
@@ -18,6 +20,8 @@ const signoutIcon = "/images/signout.png"
 export default function Sidebar({ onAction }) {
     const user = JSON.parse(localStorage.getItem("user"))
     const [sidebarStatus, setSidebarStatus] = useState(true)
+    const firstLetter = user.first_name[0].toUpperCase()
+    const secondLetter = user.last_name[0].toUpperCase()
 
     const handleMenuClick = () => {
         onAction(false)
@@ -31,12 +35,12 @@ export default function Sidebar({ onAction }) {
     
     return(
         <>
-            <div className={`fixed xl:static z-50 flex flex-col items-center justify-start bg-gray-50 ${sidebarStatus ? 'w-64' : 'w-20'} xl:w-full h-full border-r border-[rgba(0,0,0,0.2)] transition-all duration-300`}>
+            <div className={`fixed xl:static z-50 flex flex-col items-center justify-start bg-gray-50 ${sidebarStatus ? 'w-20 xl:w-64' : 'w-64 xl:w-20'} xl:w-full h-full border-r border-[rgba(0,0,0,0.2)] transition-all duration-300`}>
                 <div className="h-1/10 w-full border-b border-[rgba(0,0,0,0.2)] px-5">
                     <div className="flex flex-row w-full h-full items-center justify-between">
-                        <div className={`${sidebarStatus ? 'flex' : 'hidden'} flex-row h-full w-auto items-center justify-start gap-2`}>
-                            <div className="bg-gray-300 h-10 w-10 rounded-lg"></div>
-                            <h2 className="text-sans font-medium text-lg">Company</h2>
+                        <div className={`${sidebarStatus ? 'hidden xl:flex' : 'flex xl:hidden'} flex-row h-full w-auto items-center justify-start gap-4`}>
+                            <img src={companyLogo} className="bg-gray-300 h-10 w-10 rounded-lg" />
+                            <h2 className="text-sans font-medium text-xl">D.Vella</h2>
                         </div>
                         <button
                             onClick={sidebarStatus ? handleMenuClick : handleMenuClick2}
@@ -68,13 +72,15 @@ export default function Sidebar({ onAction }) {
                 <div className="h-1/10 w-full border-b border-[rgba(0,0,0,0.2)] px-5">
                     <div className="flex flex-row w-full h-full items-center justify-between">
                         <div className="flex flex-row h-full w-auto items-center justify-start gap-2">
-                            <div className="bg-gray-300 h-10 w-10 rounded-full"></div>
-                            <div className={`${sidebarStatus ? 'flex' : 'hidden'} flex-col items-start justify-start h-10`}>
+                            <div className={`${user.profile_picture_url === null ? 'bg-gradient-to-tl from-blue-500 to-purple-500' : 'bg-gray-300'} h-10 w-10 rounded-full flex flex-row items-center justify-center`}>
+                                <p className="text-white font-medium">{firstLetter+secondLetter}</p>
+                            </div>
+                            <div className={`${sidebarStatus ? 'hidden xl:flex' : 'flex xl:hidden'} flex-col items-start justify-start h-10`}>
                                 <h2 className="text-sans font-medium text-sm">{user.first_name} {user.last_name}</h2>
                                 <p className="text-sm text-[rgba(0,0,0,0.5)] text-sans">{user.role}</p>
                             </div>
                         </div>
-                        <button className={`${sidebarStatus ? 'flex' : 'hidden'} flex-col items-center justify-center h-10 w-10 cursor-pointer rounded-lg hover:bg-gray-100 transition duration-200`}>
+                        <button className={`${sidebarStatus ? 'hidden xl:flex' : 'flex xl:hidden'} flex-col items-center justify-center h-10 w-10 cursor-pointer rounded-lg hover:bg-gray-100 transition duration-200`}>
                             <img src={signoutIcon} className="h-5 w-auto" />
                         </button>
                     </div>
