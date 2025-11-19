@@ -1,6 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
 import authRoutes from './routes/auth.js'
 import dashboardAnalytics from './routes/dashboard-analytics.js'
@@ -11,9 +13,16 @@ dotenv.config()
 const app = express()
 const port = process.env.SERVER_PORT
 
+// Get __dirname equivalent for ES modules
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
 // Middlewares
 app.use(cors())
 app.use(express.json())
+
+// CRITICAL: Serve static files from uploads directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 // Routes
 app.use('/api', authRoutes)

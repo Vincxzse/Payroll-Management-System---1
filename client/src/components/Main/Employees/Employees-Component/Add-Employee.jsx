@@ -88,7 +88,6 @@ export default function AddEmployee({ setAddEmployeeModal }) {
             }
             setPasswordsMatched(true)
             
-            // Create FormData for multipart/form-data
             const formData = new FormData()
             formData.append('firstName', firstName)
             formData.append('lastName', lastName)
@@ -108,7 +107,7 @@ export default function AddEmployee({ setAddEmployeeModal }) {
             
             const response = await fetch(`${API_URL}/api/create-account`, {
                 method: "POST",
-                body: formData // Don't set Content-Type header, browser will set it with boundary
+                body: formData
             })
             
             const data = await response.json()
@@ -118,7 +117,6 @@ export default function AddEmployee({ setAddEmployeeModal }) {
                 setResponseStatus(true)
                 setResponseBox(true)
                 
-                // Close modal after success
                 setTimeout(() => {
                     setAddEmployeeModal(false)
                 }, 2000)

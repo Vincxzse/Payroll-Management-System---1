@@ -58,8 +58,6 @@ router.post("/login", async (req, res) => {
             console.log("Incorrect password")
             return res.status(401).json({ message: "Incorrect password" })
         }
-        
-        // Remove password from response
         delete user.password
         
         return res.status(200).json({ 
@@ -91,8 +89,6 @@ router.post("/create-account", upload.single('profilePicture'), async (req, res)
             default:
                 return res.status(400).json({ message: "Invalid pay grade" })
         }
-        
-        // Check if employee already exists
         const exists = await pool.query("SELECT * FROM users WHERE employee_id = $1", [employeeId])
         if (exists.rows.length > 0) {
             // Delete uploaded file if it exists
@@ -101,8 +97,6 @@ router.post("/create-account", upload.single('profilePicture'), async (req, res)
             }
             return res.status(400).json({ message: "User with this employee ID already exists." })
         }
-        
-        // Check if email already exists
         const emailExists = await pool.query("SELECT * FROM users WHERE email = $1", [email.toLowerCase().trim()])
         if (emailExists.rows.length > 0) {
             if (req.file) {
@@ -124,8 +118,6 @@ router.post("/create-account", upload.single('profilePicture'), async (req, res)
             `,
             [employeeId, firstName, lastName, email.toLowerCase().trim(), phone, hashedPassword, role, payGrade, salary, position, profilePictureUrl, hireDate]
         )
-        
-        // Remove password from response
         const user = result.rows[0]
         delete user.password
         
@@ -139,7 +131,56 @@ router.post("/create-account", upload.single('profilePicture'), async (req, res)
         if (req.file) {
             fs.unlinkSync(req.file.path)
         }
-        return res.status(500).json({ message: "Error creating account" })
+        return res.status(500).json({ message: "An error has occurred while creating account" })
+    }
+})
+
+router.patch("/edit-employee", async (req, res) => {
+    try {
+        const { user_id, firstName, lastName, email, role, payGrade, phone, position } = req.body
+        const exists = await pool.query("SELECT * FROM users WHERE email = $1 AND user_id != $2", [email, user_id])
+        if (exists.rows.length > 0) return res.status(400).json({ message: "User with this email already exists." })
+        let salary
+        switch (parseInt(payGrade)) {
+            case 1: salary = 13000; break
+            case 2: salary = 15000; break
+            case 3: salary = 18000; break
+            case 4: salary = 22000; break
+            case 5: salary = 25000; break
+            case 6: salary = 30000; break
+            case 7: salary = 35000; break
+            case 8: salary = 40000; break
+            case 9: salary = 55000; break
+            case 10: salary = 60000; break
+            default: return res.status(400).json({ message: "Invalid pay grade" })
+        }
+        const result = await pool.query(`
+            UPDATE users SET first_name = $1, last_name = $2, email = $3, role = $4, pay_grade = $5, phone = $6, position = $7, salary = $8 WHERE user_id = $9
+        `, [firstName, lastName, email, role, payGrade, phone, position, salary, user_id])
+        const updatedUser = await pool.query("SELECT * FROM users WHERE user_id = $1", [user_id])
+        return res.status(200).json({
+            message: "Employee updated successfully!",
+            user: updatedUser.rows[0]
+        })
+    } catch (err) {
+        console.error("edit-account:", err)
+        return res.status(500).json({ message: "An error has occurred while updating employee" })
+    }
+})
+
+router.delete("/delete-employee", async (req, res) => {
+    try {
+        const { current_user_ID, target_ID, password } = req.body
+        const getUser = await pool.query("SELECT * FROM users WHERE user_id = $1", [current_user_ID])
+        if (getUser.rows.length === 0) return res.status(400).json({ message: "Your current ID doesn't exist" })
+        const userPassword = getUser.rows[0].password
+        const isValid = await bcrypt.compare(password, userPassword)
+        if (!isValid) return res.status(401).json({ valid: false, message: "Invalid password" })
+        const result = await pool.query("DELETE FROM users WHERE user_id = $1", [target_ID])
+        return res.status(200).json({ valid: true, message: "User deleted successfully" })
+    } catch (err) {
+        console.error("Delete Employee Error:", err)
+        return res.status(500).json({ valid: false, message: "An error has occurred while deleting this user." })
     }
 })
 
