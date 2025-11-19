@@ -7,9 +7,11 @@ import { fileURLToPath } from 'url'
 import authRoutes from './routes/auth.js'
 import dashboardAnalytics from './routes/dashboard-analytics.js'
 import employeesRoute from './routes/employees-route.js'
-import attendaceRoute from './routes/attendanceRoute.js'
+import attendanceRoute from './routes/attendanceRoute.js'
 import kpiRoute from './routes/kpiRoute.js'
 import payrollRoute from './routes/payrollRoute.js'
+import performanceRoute from './routes/performance.js'
+import reportsRoute from './routes/reports.js'
 
 dotenv.config()
 
@@ -31,9 +33,11 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 app.use('/api', authRoutes)
 app.use('/api', dashboardAnalytics)
 app.use('/api', employeesRoute)
-app.use('/api', attendaceRoute)
+app.use('/api', attendanceRoute)
 app.use('/api', kpiRoute)
 app.use('/api', payrollRoute)
+app.use('/api/performance', performanceRoute)
+app.use('/api/reports', reportsRoute)
 
 app.get("/", (req, res) => {
     console.log("Server is running")

@@ -52,7 +52,6 @@ export default function EDItem(props) {
         }
     }
 
-
     return(
         <>
             { viewUser ? <EmployeeDetails employee = {props.employee} toggleModal = { () => setViewUser() } /> : null }
