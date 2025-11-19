@@ -41,7 +41,7 @@ export default function KPIPerformance({ employee }) {
                     {kpi.metrics.map((metric, index) => (
                         <div key={index} className="flex flex-row items-center justify-between py-1">
                             <p className="text-sm">{metric.name}</p>
-                            <p className="text-sm font-medium">{metric.score.toFixed(1)}</p>
+                            <p className="text-sm font-medium">{metric.score}</p>
                         </div>
                     ))}
                 </div>

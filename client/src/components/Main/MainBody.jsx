@@ -6,6 +6,8 @@ import DashboardPage from './Dashboard/DashboardPage'
 import EmployeesPage from './Employees/EmployeesPage'
 import PayrollPage from './Payroll/Payroll-Page'
 import PerformancePage from './Performance/Performance-Page'
+import ReportsPage from './Reports/Reports-Page'
+import ForecastingPage from './Forecasting/Forecasting-Page'
 
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 
@@ -27,6 +29,8 @@ export default function MainBody() {
                     <Route path="employees" element={<EmployeesPage pageLayout={sidebarData} currentUser={user} />} />
                     <Route path="payroll" element={<PayrollPage pageLayout={sidebarData} currentUser={user} />} />
                     <Route path="performance" element={<PerformancePage pageLayout={sidebarData} currentUser={user} />} />
+                    <Route path="forecasting" element={<ForecastingPage pageLayout={sidebarData} currentUser={user} />} />
+                    <Route path="reports" element={<ReportsPage pageLayout={sidebarData} currentUser={user} />} />
                 </Routes>
             </div>
             {/* <div className='col-span-5 h-full w-full flex flex-col items-start justify-start'> */}
