@@ -56,9 +56,6 @@ export default function EmployeesPage({ pageLayout, currentUser }) {
 
     return(
         <>
-            {/* <div className='absolute bg-white min-w-100 h-15 z-102 left-1/2 -translate-x-1/2 top-10 shadow-[0_0_15px_5px_rgba(0,0,0,0.1)] border-l-10 border-l-green-500'>
-                
-            </div> */}
             {addEmployeeModal ? <AddEmployee setAddEmployeeModal={() => setAddEmployeeModal()} /> : null}
             <div className={`${pageLayout ? 'col-span-5' : 'col-span-17 xl:col-start-2'} col-start-2 flex flex-col w-full min-h-full`}>
                 <Header pageLayout={pageLayout} pageTitle="Employees" pageDescription="Manage team members and profiles" currentUser={currentUser} />

@@ -16,7 +16,7 @@ export default function EmployeeDetails({ employee, toggleModal }) {
         <>  
 
             <div
-                onClick={ () => toggleModal(false) }
+                
                 className="fixed top-0 left-0 w-full h-full bg-[rgba(0,0,0,0.2)] flex flex-col items-center justify-center z-100"
             >
                 <div className="relative flex flex-col lg:grid lg:grid-cols-3 w-3/4 lg:w-auto h-3/4 lg:h-5/9 bg-white rounded-2xl overflow-hidden">

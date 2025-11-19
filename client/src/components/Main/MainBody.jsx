@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Sidebar from '../Sidebar/Sidebar'
 import DashboardPage from './Dashboard/DashboardPage'
 import EmployeesPage from './Employees/EmployeesPage'
+import PayrollPage from './Payroll/Payroll-Page'
 
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 
@@ -23,6 +24,7 @@ export default function MainBody() {
                     <Route index element={<Navigate to="dashboard" replace />} />
                     <Route path="dashboard" element={<DashboardPage pageLayout={sidebarData} currentUser={user} />} />
                     <Route path="employees" element={<EmployeesPage pageLayout={sidebarData} currentUser={user} />} />
+                    <Route path="payroll" element={<PayrollPage pageLayout={sidebarData} currentUser={user} />} />
                 </Routes>
             </div>
             {/* <div className='col-span-5 h-full w-full flex flex-col items-start justify-start'> */}
