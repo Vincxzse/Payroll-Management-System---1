@@ -33,7 +33,6 @@ export default function MainBody() {
                     <Route path="reports" element={<ReportsPage pageLayout={sidebarData} currentUser={user} />} />
                 </Routes>
             </div>
-            {/* <div className='col-span-5 h-full w-full flex flex-col items-start justify-start'> */}
         </>
     )
 }

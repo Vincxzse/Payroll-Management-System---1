@@ -34,7 +34,12 @@ export default function LoginPage() {
                 setErrorMessage(data.message)
             } else {
                 localStorage.setItem("user", JSON.stringify(data.user))
-                navigate("/admin")
+                const user = JSON.parse(localStorage.getItem('user'))
+                if (user.role === 'admin') {
+                    navigate("/admin")
+                } else {
+                    navigate("/employee")
+                }
                 setErrorMessage(data.message)
             }
         } catch (err) {

@@ -1,8 +1,13 @@
 
 import express from 'express'
 import pool from '../db/pool.js'
+import bcrypt from 'bcrypt'
+import multer from 'multer'
+import path from 'path'
+import fs from 'fs'
 
 const router = express.Router()
+const saltRounds = 10
 
 router.get("/get-employees", async (req, res) => {
     try {

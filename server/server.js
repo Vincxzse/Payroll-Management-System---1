@@ -13,6 +13,7 @@ import payrollRoute from './routes/payrollRoute.js'
 import performanceRoute from './routes/performance.js'
 import reportsRoute from './routes/reports.js'
 import forecastingRoute from './routes/forecasting.js'
+import employeeSide from './routes/employeeSide.js'
 
 dotenv.config()
 
@@ -40,6 +41,7 @@ app.use('/api', payrollRoute)
 app.use('/api/performance', performanceRoute)
 app.use('/api/reports', reportsRoute)
 app.use('/api/forecasting', forecastingRoute)
+app.use('/api', employeeSide)
 
 app.get("/", (req, res) => {
     console.log("Server is running")

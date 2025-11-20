@@ -1,5 +1,7 @@
 
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { API_URL } from "../../config"
 
 import NavLink from "./Nav-Link"
 
@@ -18,10 +20,13 @@ const helpIcon = "/images/help.png"
 const signoutIcon = "/images/signout.png"
 
 export default function Sidebar({ onAction }) {
+    const navigate = useNavigate()
     const user = JSON.parse(localStorage.getItem("user"))
     const [sidebarStatus, setSidebarStatus] = useState(true)
     const firstLetter = user.first_name[0].toUpperCase()
     const secondLetter = user.last_name[0].toUpperCase()
+    const initials = firstLetter + secondLetter
+    const profilePictureUrl = user.profile_picture_url ? `${API_URL}${user.profile_picture_url}` : null
 
     const handleMenuClick = () => {
         onAction(false)
@@ -31,6 +36,11 @@ export default function Sidebar({ onAction }) {
     const handleMenuClick2 = () => {
         onAction(true)
         setSidebarStatus(true)
+    }
+
+    const handleSignOut = () => {
+        localStorage.removeItem("user")
+        navigate("/")
     }
     
     return(
@@ -59,7 +69,6 @@ export default function Sidebar({ onAction }) {
                             <NavLink sidebarStatus={sidebarStatus} image={performanceIcon} title="Performance" link="/admin/performance" />
                             <NavLink sidebarStatus={sidebarStatus} image={forecastingIcon} title="Forecasting" link="/admin/forecasting" />
                             <NavLink sidebarStatus={sidebarStatus} image={reportsIcon} title="Reports" link="/admin/reports" />
-                            {/* <NavLink image={employeePortalIcon} title="Employee Portal" /> */}
                         </div>
                     </div>
                 </div>
@@ -73,14 +82,20 @@ export default function Sidebar({ onAction }) {
                     <div className="flex flex-row w-full h-full items-center justify-between">
                         <div className="flex flex-row h-full w-auto items-center justify-start gap-2">
                             <div className={`${user.profile_picture_url === null ? 'bg-gradient-to-tl from-blue-500 to-purple-500' : 'bg-gray-300'} h-10 w-10 rounded-full flex flex-row items-center justify-center`}>
-                                <p className="text-white font-medium">{firstLetter+secondLetter}</p>
+                                { profilePictureUrl ?
+                                    <img src={profilePictureUrl} className="h-20 w-auto rounded-full object-cover" />
+                                    : <p className="text-sans font-medium text-2xl text-white">{initials}</p>
+                                }
                             </div>
                             <div className={`${sidebarStatus ? 'hidden xl:flex' : 'flex xl:hidden'} flex-col items-start justify-start h-10`}>
                                 <h2 className="text-sans font-medium text-sm">{user.first_name} {user.last_name}</h2>
                                 <p className="text-sm text-[rgba(0,0,0,0.5)] text-sans">{user.role}</p>
                             </div>
                         </div>
-                        <button className={`${sidebarStatus ? 'hidden xl:flex' : 'flex xl:hidden'} flex-col items-center justify-center h-10 w-10 cursor-pointer rounded-lg hover:bg-gray-100 transition duration-200`}>
+                        <button
+                            onClick={handleSignOut}
+                            className={`${sidebarStatus ? 'hidden xl:flex' : 'flex xl:hidden'} flex-col items-center justify-center h-10 w-10 cursor-pointer rounded-lg hover:bg-gray-100 transition duration-200`}
+                        >
                             <img src={signoutIcon} className="h-5 w-auto" />
                         </button>
                     </div>
